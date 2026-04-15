@@ -36,83 +36,114 @@
 			z-index: 1;
 			min-height: 100vh;
 			display: flex;
-			flex-direction: column;
 			align-items: center;
 			justify-content: center;
+			padding: 3rem 4rem;
+			gap: 4rem;
+		}
+
+		/* Left column: photo + nav */
+		.home-left {
+			display: flex;
+			flex-direction: column;
+			align-items: stretch;
+			flex: 0 0 auto;
+		}
+
+		.photo-rect {
+			width: 340px;
+			height: 420px;
+			object-fit: cover;
+			object-position: center 15%;
+			display: block;
+			border: 1px solid rgba(255, 255, 255, 0.2);
+		}
+
+		.nav-buttons {
+			display: flex;
+			flex-wrap: wrap;
+			width: 340px;
+		}
+		.nav-btn {
+			flex: 1 1 auto;
+			padding: 0.75rem 0.5rem;
+			border: 1px solid rgba(255, 255, 255, 0.5);
+			background: rgba(0, 0, 0, 0.18);
+			color: white;
+			font-size: 0.58rem;
+			letter-spacing: 0.18em;
+			text-transform: uppercase;
+			cursor: pointer;
+			transition: background 0.2s;
+			margin: -0.5px;
 			text-align: center;
-			padding: 2rem;
+		}
+		.nav-btn:hover { background: rgba(255, 255, 255, 0.18); }
+
+		/* Right column: name + subtitle + cv */
+		.home-right {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			justify-content: center;
+			flex: 1;
+			max-width: 340px;
 		}
 
 		.rule {
-			width: 320px;
-			max-width: 80vw;
+			width: 100%;
 			border: none;
 			border-top: 1px solid rgba(255, 255, 255, 0.55);
-			margin-bottom: 2rem;
+			margin-bottom: 1.8rem;
 		}
 
 		h1 {
-			font-size: 2rem;
+			font-size: 1.9rem;
 			font-weight: 300;
-			letter-spacing: 0.35em;
+			letter-spacing: 0.3em;
 			text-transform: uppercase;
-			margin-bottom: 1.8rem;
-		}
-
-		.avatar {
-			width: 310px;
-			height: 310px;
-			border-radius: 50%;
-			object-fit: cover;
-			object-position: center 30%;
-			border: 2px solid rgba(255, 255, 255, 0.35);
-			margin-bottom: 1.8rem;
+			margin-bottom: 0.9rem;
+			line-height: 1.3;
 		}
 
 		.subtitle {
-			font-size: 0.72rem;
-			letter-spacing: 0.22em;
+			font-size: 0.68rem;
+			letter-spacing: 0.2em;
 			text-transform: uppercase;
-			color: rgba(255, 255, 255, 0.88);
-			line-height: 2;
+			color: rgba(255, 255, 255, 0.78);
+			line-height: 1.8;
 			margin-bottom: 1.4rem;
 		}
 
 		.cv-link {
 			display: inline-block;
-			font-size: 0.68rem;
-			letter-spacing: 0.22em;
+			font-size: 0.65rem;
+			letter-spacing: 0.2em;
 			text-transform: uppercase;
 			color: white;
 			text-decoration: underline;
 			text-decoration-style: dotted;
 			text-underline-offset: 3px;
-			margin-bottom: 1.8rem;
 			cursor: pointer;
 			background: none;
 			border: none;
 			transition: opacity 0.2s;
+			padding: 0;
 		}
 		.cv-link:hover { opacity: 0.7; }
 
-		.nav-buttons {
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: center;
+		/* Mobile */
+		@media (max-width: 760px) {
+			#home {
+				flex-direction: column;
+				padding: 2rem 1.5rem;
+				gap: 2rem;
+				text-align: center;
+			}
+			.home-right { align-items: center; max-width: 100%; }
+			.photo-rect { width: 100%; height: 320px; }
+			.nav-buttons { width: 100%; }
 		}
-		.nav-btn {
-			padding: 0.85rem 2rem;
-			border: 1px solid rgba(255, 255, 255, 0.5);
-			background: rgba(0, 0, 0, 0.18);
-			color: white;
-			font-size: 0.65rem;
-			letter-spacing: 0.22em;
-			text-transform: uppercase;
-			cursor: pointer;
-			transition: background 0.2s;
-			margin: -0.5px;
-		}
-		.nav-btn:hover { background: rgba(255, 255, 255, 0.18); }
 
 		#footer {
 			position: fixed;
@@ -242,17 +273,22 @@
 	<div id="bg"></div>
 
 	<div id="home">
-		<hr class="rule" />
-		<h1>Elizabeth Kozlov</h1>
-		<img src="images/headshot.png" class="avatar" alt="Elizabeth Kozlov" />
-		<div class="subtitle">Graduate student in astrophysics</div>
-		<button class="cv-link" onclick="showPanel('cv')">Curriculum Vitae</button>
-		<hr class="rule" />
-		<div class="nav-buttons">
-			<button class="nav-btn" onclick="showPanel('about')">About Me</button>
-			<button class="nav-btn" onclick="showPanel('research')">Research</button>
-			<button class="nav-btn" onclick="showPanel('publications')">Publications</button>
-			<button class="nav-btn" onclick="showPanel('contact')">Contact</button>
+		<div class="home-left">
+			<img src="images/headshot.png" class="photo-rect" alt="Elizabeth Kozlov" />
+			<div class="nav-buttons">
+				<button class="nav-btn" onclick="showPanel('about')">About</button>
+				<button class="nav-btn" onclick="showPanel('research')">Research</button>
+				<button class="nav-btn" onclick="showPanel('publications')">Publications</button>
+				<button class="nav-btn" onclick="showPanel('awards')">Awards</button>
+				<button class="nav-btn" onclick="showPanel('teaching')">Teaching</button>
+				<button class="nav-btn" onclick="showPanel('contact')">Contact</button>
+			</div>
+		</div>
+		<div class="home-right">
+			<hr class="rule" />
+			<h1>Elizabeth Kozlov</h1>
+			<div class="subtitle">Graduate student in astrophysics</div>
+			<button class="cv-link" onclick="showPanel('cv')">Curriculum Vitae</button>
 		</div>
 	</div>
 
@@ -288,7 +324,7 @@
 	<div id="panel-about" class="panel" onclick="handleOverlayClick(event, 'about')">
 		<div class="panel-inner">
 			<button class="close-btn" onclick="closePanel('about')">&times;</button>
-			<h2>About Me</h2>
+			<h2>About</h2>
 			<p>Elizabeth Kozlov studies the geometry of spacetime at its most extreme limits. Her research centers on black hole physics, with particular emphasis on the mathematical structure of photon ring observables and the development of semi-analytic models for magnetized accretion in Kerr spacetimes.</p>
 			<p>Elizabeth is pursuing her doctorate in astrophysics at Princeton University, where she was awarded the Centennial Fellowship in the Natural Sciences and Engineering. Her current work analyzes the differential geometry of null geodesics in the Kerr metric to characterize the structure of spin&ndash;inclination degeneracies in black hole photon rings, with the goal of identifying geometrically invariant observables that admit the determination of black hole spin. In parallel, she is working on developing semi-analytic magnetohydrodynamic models of horizon-scale accretion that extend to retrograde configurations.</p>
 			<p>As an undergraduate at Harvard University, Elizabeth developed a geometric framework for black hole spin inference through photon ring characterization and Fourier-based scattering diagnostics. Her earlier research includes precision calibration of superconducting magnets for the Large Hadron Collider at the European Organization for Nuclear Research. In condensed matter theory, she studied chaotic branched flow and the emergence of stable wave-guiding structures in periodic potentials, investigating how classical ray chaos gives rise to long-lived quantum channels in high Brillouin-zone superlattice systems. She also did work in organic chemistry and designed and synthesized metal-organic frameworks optimized for radionuclide capture, engineering pore geometry and chemical stability for selective adsorption of nuclear waste. She graduated cum laude with high honors in physics and received the Carol Davis Prize, the Herchel Smith Fellowship, and the Certificate of Distinction in Teaching for her work in quantum mechanics. She also taught courses in physics, philosophy, and chemistry, wrote for the arts board of The Harvard Crimson, and served as president of the Harvard Society of Physics Students.</p>
@@ -320,25 +356,53 @@
 		<div class="panel-inner">
 			<button class="close-btn" onclick="closePanel('publications')">&times;</button>
 			<h2>Publications</h2>
-
 			<strong>Papers</strong>
 			<ul>
 				<li>Kozlov, E., Roelofs, F., Johnson, M. D. <em>Foundations for Spin Measurement of Sagittarius A*: Photon Ring Analysis and Scattering Characterization.</em> Under Review.</li>
 				<li>Daza, A., Heller, E. J., Graf, A. M., R&auml;s&auml;nen, E. <em>Propagation of Waves in High Brillouin Zones: Chaotic Branched Flow and Stable Superwires.</em> PNAS, Vol. 118, No. 40, 2021. Acknowledged contributor.</li>
 			</ul>
-
 			<strong>Posters</strong>
 			<ul>
 				<li>Kozlov, E., Roelofs, F., Johnson, M. D. <em>Analyzing Photon Rings: Tools and Techniques for Investigating the Spin of Sagittarius A*</em></li>
 				<li>Kozlov, E., Uzsoy, A. S., Villar, A. <em>Enhancing Dark Matter Detection Using Hybrid Machine Learning Techniques</em></li>
 				<li>Kozlov, E., Chua, C., Abdelazim, K., Short, M. <em>Metal-Organic Frameworks for the Adsorption of Radioactive Nuclear Waste</em></li>
 			</ul>
-
 			<strong>Presentations</strong>
 			<ul>
 				<li><em>Quantitative Analysis and Mitigation of Scattering Effects for Black Hole Spin Measurement</em>, National Astronomical Observatory, Tokyo, Japan, 2024</li>
 				<li><em>Advancing Photon Ring Imaging: Mitigating Scattering for Sagittarius A* Spin Estimation</em>, Center for Astrophysics, Harvard &amp; Smithsonian, Cambridge, MA, 2024</li>
 				<li><em>Development of Metal-Organic Frameworks for the Extraction of Nuclear Waste</em>, CCB Undergraduate Symposium, Harvard University, Cambridge, MA, 2023</li>
+			</ul>
+		</div>
+	</div>
+
+	<!-- Awards Panel -->
+	<div id="panel-awards" class="panel" onclick="handleOverlayClick(event, 'awards')">
+		<div class="panel-inner">
+			<button class="close-btn" onclick="closePanel('awards')">&times;</button>
+			<h2>Awards</h2>
+			<ul>
+				<li><strong>Centennial Fellowship in the Natural Sciences and Engineering</strong>, Princeton University, 2025&ndash;2030<br /><em>Awarded at admission to top incoming doctoral students based on academic excellence and research promise. Provides full fellowship support with a premium supplement for the duration of the program.</em></li>
+				<li><strong>Carol Davis Prize</strong>, Harvard University, 2025<br /><em>Awarded for exceptional service and contributions to the Physics community.</em></li>
+				<li><strong>Herchel Smith Harvard Undergraduate Science Research Fellowship</strong>, Harvard University, 2024<br /><em>Awarded for distinguished undergraduate research in physics.</em></li>
+				<li><strong>Certificate of Distinction in Teaching</strong>, Quantum Mechanics, Harvard University, 2024<br /><em>Awarded for outstanding teaching as a Peer Study Leader, reflecting high student evaluations and excellence in pedagogy, equity, and leadership.</em></li>
+				<li><strong>Weissman International Internship Scholar</strong>, Harvard University, 2023<br /><em>Awarded funding for summer research.</em></li>
+				<li><strong>Program for Research in Science and Engineering (PRISE)</strong>, Harvard University, 2023<br /><em>Provided housing and stipend for summer research.</em></li>
+			</ul>
+		</div>
+	</div>
+
+	<!-- Teaching Panel -->
+	<div id="panel-teaching" class="panel" onclick="handleOverlayClick(event, 'teaching')">
+		<div class="panel-inner">
+			<button class="close-btn" onclick="closePanel('teaching')">&times;</button>
+			<h2>Teaching</h2>
+			<ul>
+				<li><strong>Course Assistant, Physics 19: Introduction to Theoretical Physics</strong>, Harvard University, Fall 2024<br /><em>Held office hours, graded assignments, proctored exams. Topics: analytical mechanics, thermodynamics, classical fields, special relativity, quantum theory.</em></li>
+				<li><strong>Course Assistant, Physics 143A: Quantum Physics</strong>, Harvard University, Spring 2024<br /><em>Built an AI chatbot for introductory quantum mechanics. Held office hours, graded assignments, provided technical guidance on wavefunctions, measurement, and uncertainty principles.</em></li>
+				<li><strong>Teaching Assistant, Chem 160: Quantum Chemistry</strong>, Harvard University, Fall 2023<br /><em>Led study sessions, conducted office hours. Earned the CCB Certificate of Distinction in Teaching for exemplary student engagement and teaching excellence.</em></li>
+				<li><strong>Course Assistant, Physics 137: Conceptual Foundations of Quantum Mechanics</strong>, Harvard University, Spring 2023<br /><em>Graded problem sets.</em></li>
+				<li><strong>Adviser, Harvard Society of Physics Students (SPS)</strong>, Harvard University, 2023&ndash;2025<br /><em>Represented SPS at student organization and academic fairs, mentored students in course and career planning, supported the undergraduate physics community.</em></li>
 			</ul>
 		</div>
 	</div>
