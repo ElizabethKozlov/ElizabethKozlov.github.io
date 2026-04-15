@@ -1,0 +1,384 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Elizabeth Kozlov</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<style>
+		*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+		body {
+			font-family: 'Helvetica Neue', Arial, sans-serif;
+			background: #000;
+			color: white;
+			min-height: 100vh;
+			overflow-x: hidden;
+		}
+
+		#bg {
+			position: fixed;
+			top: 0; left: 0;
+			width: 100%; height: 100%;
+			background: url('images/backround.png') center center / cover no-repeat;
+			z-index: 0;
+			filter: grayscale(100%);
+		}
+		#bg::after {
+			content: '';
+			position: absolute;
+			top: 0; left: 0;
+			width: 100%; height: 100%;
+			background: rgba(0, 0, 0, 0.38);
+		}
+
+		#home {
+			position: relative;
+			z-index: 1;
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			padding: 2rem;
+		}
+
+		.rule {
+			width: 320px;
+			max-width: 80vw;
+			border: none;
+			border-top: 1px solid rgba(255, 255, 255, 0.55);
+			margin-bottom: 2rem;
+		}
+
+		h1 {
+			font-size: 2rem;
+			font-weight: 300;
+			letter-spacing: 0.35em;
+			text-transform: uppercase;
+			margin-bottom: 1.8rem;
+		}
+
+		.avatar {
+			width: 310px;
+			height: 310px;
+			border-radius: 50%;
+			object-fit: cover;
+			object-position: center 30%;
+			border: 2px solid rgba(255, 255, 255, 0.35);
+			margin-bottom: 1.8rem;
+		}
+
+		.subtitle {
+			font-size: 0.72rem;
+			letter-spacing: 0.22em;
+			text-transform: uppercase;
+			color: rgba(255, 255, 255, 0.88);
+			line-height: 2;
+			margin-bottom: 1.4rem;
+		}
+
+		.cv-link {
+			display: inline-block;
+			font-size: 0.68rem;
+			letter-spacing: 0.22em;
+			text-transform: uppercase;
+			color: white;
+			text-decoration: underline;
+			text-decoration-style: dotted;
+			text-underline-offset: 3px;
+			margin-bottom: 1.8rem;
+			cursor: pointer;
+			background: none;
+			border: none;
+			transition: opacity 0.2s;
+		}
+		.cv-link:hover { opacity: 0.7; }
+
+		.nav-buttons {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+		}
+		.nav-btn {
+			padding: 0.85rem 2rem;
+			border: 1px solid rgba(255, 255, 255, 0.5);
+			background: rgba(0, 0, 0, 0.18);
+			color: white;
+			font-size: 0.65rem;
+			letter-spacing: 0.22em;
+			text-transform: uppercase;
+			cursor: pointer;
+			transition: background 0.2s;
+			margin: -0.5px;
+		}
+		.nav-btn:hover { background: rgba(255, 255, 255, 0.18); }
+
+		#footer {
+			position: fixed;
+			bottom: 1.2rem;
+			width: 100%;
+			text-align: center;
+			font-size: 0.6rem;
+			letter-spacing: 0.15em;
+			text-transform: uppercase;
+			color: rgba(255, 255, 255, 0.35);
+			z-index: 1;
+		}
+		#footer a { color: rgba(255, 255, 255, 0.35); text-decoration: none; }
+
+		.panel {
+			display: none;
+			position: fixed;
+			top: 0; left: 0;
+			width: 100%; height: 100%;
+			z-index: 20;
+			align-items: center;
+			justify-content: center;
+			padding: 2rem;
+			background: rgba(0, 0, 0, 0.55);
+		}
+		.panel.active { display: flex; }
+
+		.panel-inner {
+			background: rgba(8, 4, 18, 0.95);
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			max-width: 680px;
+			width: 100%;
+			padding: 3rem 3.5rem;
+			position: relative;
+			max-height: 82vh;
+			overflow-y: auto;
+		}
+
+		.panel-inner h2 {
+			font-size: 0.78rem;
+			letter-spacing: 0.28em;
+			text-transform: uppercase;
+			font-weight: 300;
+			margin-bottom: 1.8rem;
+			padding-bottom: 1rem;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+		}
+
+		.panel-inner p {
+			font-size: 0.9rem;
+			line-height: 1.85;
+			color: rgba(255, 255, 255, 0.8);
+			margin-bottom: 1.1rem;
+		}
+		.panel-inner p:last-child { margin-bottom: 0; }
+		.panel-inner a { color: rgba(180, 210, 255, 0.9); }
+		.panel-inner strong {
+			color: white;
+			font-weight: 600;
+			display: block;
+			margin-top: 1.4rem;
+			margin-bottom: 0.3rem;
+		}
+		.panel-inner em {
+			font-style: italic;
+			color: rgba(255, 255, 255, 0.65);
+		}
+
+		.panel-inner ul {
+			list-style: none;
+			padding: 0;
+			margin-bottom: 1.1rem;
+		}
+		.panel-inner ul li {
+			font-size: 0.9rem;
+			line-height: 1.85;
+			color: rgba(255, 255, 255, 0.8);
+			padding-left: 1.2rem;
+			position: relative;
+			margin-bottom: 0.7rem;
+		}
+		.panel-inner ul li::before {
+			content: '—';
+			position: absolute;
+			left: 0;
+			color: rgba(255, 255, 255, 0.4);
+		}
+
+		.contact-row {
+			display: flex;
+			align-items: flex-start;
+			gap: 0.8rem;
+			margin-bottom: 0.9rem;
+			font-size: 0.9rem;
+			color: rgba(255, 255, 255, 0.8);
+		}
+		.contact-row a {
+			color: rgba(180, 210, 255, 0.9);
+			text-decoration: none;
+		}
+		.contact-row a:hover { text-decoration: underline; }
+		.contact-label {
+			font-size: 0.65rem;
+			letter-spacing: 0.15em;
+			text-transform: uppercase;
+			color: rgba(255,255,255,0.4);
+			min-width: 70px;
+			padding-top: 0.15rem;
+		}
+
+		.close-btn {
+			position: absolute;
+			top: 1.1rem; right: 1.5rem;
+			background: none;
+			border: none;
+			color: rgba(255, 255, 255, 0.45);
+			font-size: 1.6rem;
+			cursor: pointer;
+			line-height: 1;
+			transition: color 0.2s;
+		}
+		.close-btn:hover { color: white; }
+	</style>
+</head>
+<body>
+
+	<div id="bg"></div>
+
+	<div id="home">
+		<hr class="rule" />
+		<h1>Elizabeth Kozlov</h1>
+		<img src="images/headshot.png" class="avatar" alt="Elizabeth Kozlov" />
+		<div class="subtitle">Graduate student in astrophysics</div>
+		<button class="cv-link" onclick="showPanel('cv')">Curriculum Vitae</button>
+		<hr class="rule" />
+		<div class="nav-buttons">
+			<button class="nav-btn" onclick="showPanel('about')">About Me</button>
+			<button class="nav-btn" onclick="showPanel('research')">Research</button>
+			<button class="nav-btn" onclick="showPanel('publications')">Publications</button>
+			<button class="nav-btn" onclick="showPanel('contact')">Contact</button>
+		</div>
+	</div>
+
+	<!-- CV Panel -->
+	<div id="panel-cv" class="panel" onclick="handleOverlayClick(event, 'cv')">
+		<div class="panel-inner">
+			<button class="close-btn" onclick="closePanel('cv')">&times;</button>
+			<h2>Curriculum Vitae</h2>
+			<strong>Education</strong>
+			<p>Princeton University<br /><em>Centennial Fellow</em><br />PhD in Astrophysical Sciences (Expected 2030)</p>
+			<p>Harvard University<br />B.A. in Physics, High Honors, <em>cum laude</em> (2025), GPA 3.9/4.0</p>
+			<strong>Fellowships &amp; Awards</strong>
+			<p>
+				Centennial Fellowship, Princeton University, 2025&ndash;2030<br />
+				Carol Davis Prize, Harvard University, 2025<br />
+				Herchel Smith Undergraduate Research Fellowship, Harvard University, 2024<br />
+				Certificate of Distinction in Teaching, Harvard University, 2024<br />
+				Weissman International Internship Scholar, Harvard University, 2023
+			</p>
+			<strong>Teaching</strong>
+			<p>
+				Course Assistant, Physics 19: Introduction to Theoretical Physics, Harvard (Fall 2024)<br />
+				Teaching Assistant, Chem 160: Quantum Chemistry, Harvard (Fall 2023)<br />
+				Course Assistant, Physics 143A: Quantum Physics, Harvard (Spring 2024)<br />
+				Course Assistant, Physics 137: Conceptual Foundations of Quantum Mechanics, Harvard (Spring 2023)
+			</p>
+			<strong>Skills</strong>
+			<p>Python, Mathematica, MATLAB, scientific computing, numerical simulations, machine learning, technical writing<br />Languages: English (fluent), Russian (fluent), Ukrainian (intermediate)</p>
+		</div>
+	</div>
+
+	<!-- About Panel -->
+	<div id="panel-about" class="panel" onclick="handleOverlayClick(event, 'about')">
+		<div class="panel-inner">
+			<button class="close-btn" onclick="closePanel('about')">&times;</button>
+			<h2>About Me</h2>
+			<p>Elizabeth Kozlov studies the geometry of spacetime at its most extreme limits. Her research centers on black hole physics, with particular emphasis on the mathematical structure of photon ring observables and the development of semi-analytic models for magnetized accretion in Kerr spacetimes.</p>
+			<p>Elizabeth is pursuing her doctorate in astrophysics at Princeton University, where she was awarded the Centennial Fellowship in the Natural Sciences and Engineering. Her current work analyzes the differential geometry of null geodesics in the Kerr metric to characterize the structure of spin&ndash;inclination degeneracies in black hole photon rings, with the goal of identifying geometrically invariant observables that admit the determination of black hole spin. In parallel, she is working on developing semi-analytic magnetohydrodynamic models of horizon-scale accretion that extend to retrograde configurations.</p>
+			<p>As an undergraduate at Harvard University, Elizabeth developed a geometric framework for black hole spin inference through photon ring characterization and Fourier-based scattering diagnostics. Her earlier research includes precision calibration of superconducting magnets for the Large Hadron Collider at the European Organization for Nuclear Research. In condensed matter theory, she studied chaotic branched flow and the emergence of stable wave-guiding structures in periodic potentials, investigating how classical ray chaos gives rise to long-lived quantum channels in high Brillouin-zone superlattice systems. She also did work in organic chemistry and designed and synthesized metal-organic frameworks optimized for radionuclide capture, engineering pore geometry and chemical stability for selective adsorption of nuclear waste. She graduated cum laude with high honors in physics and received the Carol Davis Prize, the Herchel Smith Fellowship, and the Certificate of Distinction in Teaching for her work in quantum mechanics. She also taught courses in physics, philosophy, and chemistry, wrote for the arts board of The Harvard Crimson, and served as president of the Harvard Society of Physics Students.</p>
+			<p>At Princeton, Elizabeth serves on the graduate leadership committee for her department. Her training includes graduate coursework in general relativity, quantum field theory, machine learning, and particle physics.</p>
+			<p>Originally from the state of Maine, Elizabeth loves hiking and skiing. If not doing research, she can be found reading, traveling, knitting, and exploring new restaurants with friends.</p>
+		</div>
+	</div>
+
+	<!-- Research Panel -->
+	<div id="panel-research" class="panel" onclick="handleOverlayClick(event, 'research')">
+		<div class="panel-inner">
+			<button class="close-btn" onclick="closePanel('research')">&times;</button>
+			<h2>Research</h2>
+			<strong>Current Work</strong>
+			<p>Her main project studies photon ring observables in Kerr spacetimes: the bright, lensed features formed by light that completes near-polar orbits before escaping to a distant observer. The goal is to characterize the degeneracy structure of these observables (ring diameter, centroid displacement, arc width) and identify which combinations of measurements can break the spin&ndash;inclination degeneracy and recover black hole spin. The approach uses differential geometry of null geodesics, Fisher information analysis, and Jacobian sensitivity mapping over the Kerr parameter space.</p>
+			<p>In parallel she is developing semi-analytic magnetohydrodynamic models of horizon-scale accretion, extending existing force-free magnetosphere solutions to retrograde disk configurations.</p>
+			<p>She is also beginning a new collaboration on primordial black holes, formed in the very early universe before any stars existed. These objects are of significant cosmological interest as dark matter candidates and as probes of the primordial power spectrum.</p>
+			<strong>Previous Work</strong>
+			<p><em>Spin Measurement of Sagittarius A*, Center for Astrophysics, Harvard &amp; Smithsonian (2024)</em><br />Geometric framework for black hole spin inference through photon ring characterization; Fourier-based diagnostics for interstellar scattering mitigation.</p>
+			<p><em>Dark Matter Detection, Harvard University (2024)</em><br />Hybrid anomaly-detection pipeline combining Isolation Forests and autoencoders applied to CoGeNT nuclear recoil data.</p>
+			<p><em>Superconducting Magnet Calibration, CERN (2023)</em><br />Calibration and field characterization of 16 T Nb3Sn magnets for future LHC upgrades.</p>
+			<p><em>Metal-Organic Framework Design, Whitesides Lab, Harvard (2022)</em><br />Synthesis of MOFs optimized for radionuclide adsorption.</p>
+			<p><em>Chaotic Branched Flow, Heller Group, Harvard (2022)</em><br />Chaotic branched flow and stable wave-guiding structures in high Brillouin-zone superlattice systems.</p>
+		</div>
+	</div>
+
+	<!-- Publications Panel -->
+	<div id="panel-publications" class="panel" onclick="handleOverlayClick(event, 'publications')">
+		<div class="panel-inner">
+			<button class="close-btn" onclick="closePanel('publications')">&times;</button>
+			<h2>Publications</h2>
+
+			<strong>Papers</strong>
+			<ul>
+				<li>Kozlov, E., Roelofs, F., Johnson, M. D. <em>Foundations for Spin Measurement of Sagittarius A*: Photon Ring Analysis and Scattering Characterization.</em> Under Review.</li>
+				<li>Daza, A., Heller, E. J., Graf, A. M., R&auml;s&auml;nen, E. <em>Propagation of Waves in High Brillouin Zones: Chaotic Branched Flow and Stable Superwires.</em> PNAS, Vol. 118, No. 40, 2021. Acknowledged contributor.</li>
+			</ul>
+
+			<strong>Posters</strong>
+			<ul>
+				<li>Kozlov, E., Roelofs, F., Johnson, M. D. <em>Analyzing Photon Rings: Tools and Techniques for Investigating the Spin of Sagittarius A*</em></li>
+				<li>Kozlov, E., Uzsoy, A. S., Villar, A. <em>Enhancing Dark Matter Detection Using Hybrid Machine Learning Techniques</em></li>
+				<li>Kozlov, E., Chua, C., Abdelazim, K., Short, M. <em>Metal-Organic Frameworks for the Adsorption of Radioactive Nuclear Waste</em></li>
+			</ul>
+
+			<strong>Presentations</strong>
+			<ul>
+				<li><em>Quantitative Analysis and Mitigation of Scattering Effects for Black Hole Spin Measurement</em>, National Astronomical Observatory, Tokyo, Japan, 2024</li>
+				<li><em>Advancing Photon Ring Imaging: Mitigating Scattering for Sagittarius A* Spin Estimation</em>, Center for Astrophysics, Harvard &amp; Smithsonian, Cambridge, MA, 2024</li>
+				<li><em>Development of Metal-Organic Frameworks for the Extraction of Nuclear Waste</em>, CCB Undergraduate Symposium, Harvard University, Cambridge, MA, 2023</li>
+			</ul>
+		</div>
+	</div>
+
+	<!-- Contact Panel -->
+	<div id="panel-contact" class="panel" onclick="handleOverlayClick(event, 'contact')">
+		<div class="panel-inner">
+			<button class="close-btn" onclick="closePanel('contact')">&times;</button>
+			<h2>Contact</h2>
+			<p>Correspondence may be directed to the following.</p>
+			<div class="contact-row">
+				<span class="contact-label">Email</span>
+				<a href="mailto:ElizabethKozlov@princeton.edu">ElizabethKozlov@princeton.edu</a>
+			</div>
+			<div class="contact-row">
+				<span class="contact-label">LinkedIn</span>
+				<a href="https://www.linkedin.com/in/elizabeth-kozlov" target="_blank">linkedin.com/in/elizabeth-kozlov</a>
+			</div>
+			<div class="contact-row">
+				<span class="contact-label">Address</span>
+				<span>Department of Astrophysical Sciences<br />Peyton Hall, 4 Ivy Lane<br />Princeton University, Princeton, NJ 08544<br />Office: 15 Peyton Hall</span>
+			</div>
+		</div>
+	</div>
+
+	<div id="footer">
+		<p>&copy; Elizabeth Kozlov. All rights reserved. &nbsp;|&nbsp; Design: <a href="http://html5up.net">HTML5 UP</a></p>
+	</div>
+
+	<script>
+		function showPanel(name) {
+			document.getElementById('panel-' + name).classList.add('active');
+		}
+		function closePanel(name) {
+			document.getElementById('panel-' + name).classList.remove('active');
+		}
+		function handleOverlayClick(e, name) {
+			if (e.target === e.currentTarget) closePanel(name);
+		}
+	</script>
+
+</body>
+</html>
