@@ -37,12 +37,12 @@
 			min-height: 100vh;
 			display: flex;
 			align-items: center;
-			justify-content: center;
-			padding: 3rem 4rem;
+			justify-content: flex-start;
+			padding: 3rem;
 			gap: 4rem;
 		}
 
-		/* Left column: photo + nav */
+		/* Left column: photo + stacked nav */
 		.home-left {
 			display: flex;
 			flex-direction: column;
@@ -51,43 +51,46 @@
 		}
 
 		.photo-rect {
-			width: 340px;
-			height: 420px;
+			width: 280px;
+			height: 370px;
 			object-fit: cover;
-			object-position: center 15%;
+			object-position: center center;
+			object-fit: contain;
 			display: block;
 			border: 1px solid rgba(255, 255, 255, 0.2);
+			background: #000;
 		}
 
 		.nav-buttons {
 			display: flex;
-			flex-wrap: wrap;
-			width: 340px;
+			flex-direction: column;
+			width: 280px;
 		}
 		.nav-btn {
-			flex: 1 1 auto;
-			padding: 0.75rem 0.5rem;
+			width: 100%;
+			padding: 0.8rem 1.2rem;
 			border: 1px solid rgba(255, 255, 255, 0.5);
+			border-top: none;
 			background: rgba(0, 0, 0, 0.18);
 			color: white;
-			font-size: 0.58rem;
-			letter-spacing: 0.18em;
+			font-size: 0.62rem;
+			letter-spacing: 0.2em;
 			text-transform: uppercase;
 			cursor: pointer;
 			transition: background 0.2s;
-			margin: -0.5px;
-			text-align: center;
+			text-align: left;
 		}
+		.nav-btn:first-child { border-top: 1px solid rgba(255,255,255,0.5); }
 		.nav-btn:hover { background: rgba(255, 255, 255, 0.18); }
 
-		/* Right column: name + subtitle + cv */
+		/* Right column */
 		.home-right {
 			display: flex;
 			flex-direction: column;
 			align-items: flex-start;
 			justify-content: center;
 			flex: 1;
-			max-width: 340px;
+			max-width: 380px;
 		}
 
 		.rule {
@@ -138,10 +141,11 @@
 				flex-direction: column;
 				padding: 2rem 1.5rem;
 				gap: 2rem;
-				text-align: center;
+				align-items: center;
+				justify-content: center;
 			}
-			.home-right { align-items: center; max-width: 100%; }
-			.photo-rect { width: 100%; height: 320px; }
+			.home-right { align-items: center; max-width: 100%; text-align: center; }
+			.photo-rect { width: 100%; height: auto; }
 			.nav-buttons { width: 100%; }
 		}
 
@@ -282,13 +286,13 @@
 				<button class="nav-btn" onclick="showPanel('awards')">Awards</button>
 				<button class="nav-btn" onclick="showPanel('teaching')">Teaching</button>
 				<button class="nav-btn" onclick="showPanel('contact')">Contact</button>
+				<button class="nav-btn" onclick="showPanel('cv')">Curriculum Vitae</button>
 			</div>
 		</div>
 		<div class="home-right">
 			<hr class="rule" />
 			<h1>Elizabeth Kozlov</h1>
 			<div class="subtitle">Graduate student in astrophysics</div>
-			<button class="cv-link" onclick="showPanel('cv')">Curriculum Vitae</button>
 		</div>
 	</div>
 
